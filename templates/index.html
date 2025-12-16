@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Predicción de Popularidad</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f6fa;
+      display: flex;
+      justify-content: center;
+      padding: 30px;
+    }
+    table {
+      background-color: #ffffff;
+      border-collapse: collapse;
+      width: 600px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+    td {
+      padding: 10px;
+    }
+    label {
+      font-weight: bold;
+      color: #444;
+    }
+    input, select {
+      width: 95%;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #0077cc;
+      color: white;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+    .resultado {
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .popular {
+      color: #28a745;
+      font-weight: bold;
+    }
+    .no-popular {
+      color: #d9534f;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <form method="post">
+    <h2>Predicción de Popularidad de Cosméticos</h2>
+    <table>
+      <tr>
+        <td><label for="price_winsor">Precio:</label></td>
+        <td><input type="number" id="price_winsor" name="price_winsor" step="0.01" required></td>
+      </tr>
+      <tr>
+        <td><label for="website">Website:</label></td>
+        <td>
+          <select id="website" name="website" required>
+            <option value="amazon">Amazon</option>
+            <option value="Flipkart">Flipkart</option>
+            <option value="Sephora">Sephora</option>
+            <option value="ulta">Ulta</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="category">Categoría:</label></td>
+        <td>
+          <select id="category" name="category" required>
+            <option value="body">Body</option>
+            <option value="eyes">Eyes</option>
+            <option value="face">Face</option>
+            <option value="hair">Hair</option>
+            <option value="lips">Lips</option>
+            <option value="skincare">Skincare</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="subcategory">Subcategoría:</label></td>
+        <td>
+          <select id="subcategory" name="subcategory" required>
+            <option value="blush">Blush</option>
+            <option value="bodywash">Bodywash</option>
+            <option value="cleanser">Cleanser</option>
+            <option value="concealer">Concealer</option>
+            <option value="conditioner">Conditioner</option>
+            <option value="dry shampoo">Dry Shampoo</option>
+            <option value="eye primer">Eye Primer</option>
+            <option value="eye treatment">Eye Treatment</option>
+            <option value="eyebrow">Eyebrow</option>
+            <option value="eyelashes">Eyelashes</option>
+            <option value="eyeliner">Eyeliner</option>
+            <option value="eyeshadow">Eyeshadow</option>
+            <option value="face oil">Face Oil</option>
+            <option value="face wash">Face Wash</option>
+            <option value="foundation">Foundation</option>
+            <option value="hairmask">Hairmask</option>
+            <option value="hairstyling">Hairstyling</option>
+            <option value="highlighter">Highlighter</option>
+            <option value="lipbalm">Lipbalm</option>
+            <option value="lipgloss">Lipgloss</option>
+            <option value="lipliner">Lipliner</option>
+            <option value="lipstain">Lipstain</option>
+            <option value="lipstick">Lipstick</option>
+            <option value="mascara">Mascara</option>
+            <option value="mask">Mask</option>
+            <option value="moisturizer">Moisturizer</option>
+            <option value="oil">Oil</option>
+            <option value="perfume">Perfume</option>
+            <option value="powder">Powder</option>
+            <option value="primer">Primer</option>
+            <option value="serum">Serum</option>
+            <option value="shampoo">Shampoo</option>
+            <option value="soap">Soap</option>
+            <option value="spray">Spray</option>
+            <option value="sunscreen">Sunscreen</option>
+            <option value="toner">Toner</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="country">País:</label></td>
+        <td>
+          <select id="country" name="country" required>
+            <option value="India">INDIA</option>
+            <option value="USA">USA</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align:center;">
+          <button type="submit">Predecir</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+{% if resultado %}
+  <div class="resultado">
+    <h3>Resultado del Análisis</h3>
+    <p>Predicción: 
+      <span class="{{ 'popular' if resultado == 'Popular' else 'no-popular' }}">
+        {{ resultado }}
+      </span>
+    </p>
+    <p>Probabilidad: <b>{{ probabilidad }}%</b></p>
+
+    <h4>Datos ingresados:</h4>
+    <ul>
+      {% for campo, valor in form_data.items() %}
+        <li><b>{{ campo|capitalize }}:</b> {{ valor }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+</body>
+</html>

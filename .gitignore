@@ -1,0 +1,10 @@
+# Entorno virtual
+predict-env/
+venv/
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+
